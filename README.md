@@ -1,63 +1,71 @@
-﻿---
-
-# Discrete Event Simulation: Estación del Nord (Barcelona) Bus Terminal
-
-## Overview
-[cite_start]This project presents a discrete event simulation (DES) developed in **FlexSim** to analyze the operational performance of the **Estación del Nord** in Barcelona[cite: 483, 487]. [cite_start]The study focuses on the impact of high passenger demand and simultaneous bus arrivals on system efficiency, specifically identifying bottlenecks and evaluating service quality[cite: 483, 486].
-
-[cite_start]The Estación del Nord is a critical transport hub that has seen a significant increase in traffic, growing from 1 million to 3.2 million travelers in just two years[cite: 497]. [cite_start]This simulation models the service logic of three specific routes managed by the operator **ALSA**: Barcelona-Berga, e12, and 602[cite: 504, 506].
-
-## Key Objectives
-* [cite_start]**Identify Bottlenecks:** Pinpoint specific points in the passenger boarding and bus arrival process that cause delays[cite: 486].
-* [cite_start]**Estimate Wait Times:** Quantify the average and peak waiting times for passengers across different demand scenarios[cite: 486].
-* [cite_start]**Evaluate Operational Management:** Analyze the formation of queues for both passengers and vehicles to suggest infrastructure or scheduling improvements[cite: 486].
-
-## System Logic & Modeling
-[cite_start]The simulation utilizes **Process Flow** and **FlexScript** to handle complex decision logic beyond standard FlexSim objects[cite: 260].
-
-### 1. Entity & Resource Definition
-* [cite_start]**Temporal Entities:** Passengers and Buses[cite: 51].
-* [cite_start]**Permanent Entities:** Loading points, passenger queues, and bus arrival queues[cite: 51].
-* [cite_start]**Bus Specifications:** Setra S519HD models with a fixed capacity of 50 passengers[cite: 39].
-
-### 2. Operational Hypotheses
-* [cite_start]**Data Input:** Due to the absence of a live database, arrivals are modeled using synthetic data with variable rates to represent peak and off-peak hours[cite: 519, 520].
-* [cite_start]**Arrival Tables:** Real-world scheduling is replicated using Arrival Tables linked to Excel files for precise frequency control[cite: 240, 241].
-* [cite_start]**Boarding Logic:** The boarding process concludes when the bus reaches capacity, all passengers in the queue have boarded, or a predefined time limit is met[cite: 43].
-
-## Technical Implementation
-### Process Flow Logic
-The "intelligence" of the model is driven by custom **FlexScript** snippets, most notably the **"¿Puedo irme?" (Can I leave?)[cite_start]** decision node[cite: 260, 261]. [cite_start]This logic evaluates real-time conditions (such as current occupancy and scheduled departure times) before releasing a bus from the platform[cite: 262].
-
-### Performance Metrics (Dashboards)
-[cite_start]Four primary **Statistics Collectors** were implemented to monitor system health in real-time[cite: 251]:
-* [cite_start]**Bus Occupancy:** Tracks if buses are leaving subutilized or at full capacity[cite: 252, 253].
-* [cite_start]**Passenger Flow:** Compares total system entries vs. exits to ensure 100% model integrity[cite: 254, 255].
-* [cite_start]**Wait Time:** Measures the duration from station entry to the "Move Object" command toward the bus[cite: 256].
-* [cite_start]**Bus Cycle Time:** Measures total platform dwell time, accounting for "payment/validation" delays during boarding[cite: 258, 259].
-
-## Key Insights & Conclusions
-* **Capacity Bottlenecks:** During peak hours, the primary constraint is bus capacity rather than frequency alone.
-* **Station Sizing:** The study indicates that the north station should maintain a minimum capacity for 50 passengers to manage peak demand effectively.
-* **Operational Efficiency:** Improving vehicle capacity could reduce the required frequency, leading to lower operational costs without sacrificing service quality.
-
-## Tools Used
-* **FlexSim:** Discrete event simulation environment.
-* **Excel:** Data input management for arrival schedules.
-* **FlexScript:** Custom logic and decision-making algorithms.
+﻿# 🚌 Discrete Event Simulation — Estació del Nord (Barcelona)
+> Passenger Queue Analysis and Bus Frequency Optimization using FlexSim
+> Master's Degree in Industry 4.0 · Universitat Politècnica de Catalunya (UPC)
 
 ---
-### Suggested Repository Structure
-```text
-├── Model/
-│   ├── Estacion_del_Nord_Simulation.fsm
-│   └── Arrival_Schedules.xlsx
-├── Documentation/
-│   ├── Memoria_Final_Simulacion.pdf
-│   └── Presentation_Slides.pdf
-├── README.md
-└── .gitignore
-```
 
+## 📌 Project Overview
+This project applies Discrete Event Simulation (DES) to model passenger flow 
+and bus boarding operations at Estació del Nord — Barcelona's main intercity 
+bus terminal, serving over 3.2 million passengers per year.
 
+The simulation evaluates how bus service frequency affects passenger queue 
+formation, wait times, and unmet demand under peak and off-peak conditions, 
+with the goal of identifying the optimal frequency policy for a defined 
+service level target.
+
+## 🎯 Business Problem
+As passenger volumes at Estació del Nord grew from ~1 million to ~3.2 million 
+travelers, congestion at boarding platforms increased significantly. 
+This study addresses the question: what bus service frequency achieves an 
+average passenger wait time of ≤ 20 minutes, while minimizing operational 
+overcapacity?
+
+## 🛠️ Tools & Technologies
+- **FlexSim** — Discrete Event Simulation (DES), General Process Flow, 
+  Global List, FlexScript, Experimenter
+- **Python / Excel** — Arrival table construction, demand profiling
+- **Methodology** — Queuing theory, experimental design, 
+  linear interpolation for adaptive frequency policy
+
+## 📊 Key Results
+
+| Scenario | Demand | Frequency | Avg. Wait Time | Outcome |
+|---|---|---|---|---|
+| Peak hour — optimal | 2 pax/min | **8 min** | ~12 min | ✅ Target met |
+| Peak hour — saturated | 2 pax/min | 10 min | >200 min | ❌ System collapse |
+| Valley hour — optimal | 0.2 pax/min | **13 min** | ~20 min | ✅ Target met |
+| Variable frequency (full day) | Adaptive | Adaptive | **~10 min avg** | ✅ Best overall |
+
+**Derived frequency policy formula:**
+Interval (s) = 813.3 − 166.6 × arrival_rate (pax/min)
+
+This formula allows any operator to calculate the recommended bus interval 
+for any intermediate demand level, balancing service quality and efficiency.
+
+## 🏗️ System Architecture
+- 3 bus lines (Barcelona–Berga, Line e12, Line 602), each with a dedicated 
+  boarding point
+- Entities: passengers and buses generated via deterministic Excel 
+  Arrival Tables
+- Global List for real-time passenger-bus matching (filtered by route type)
+- Custom FlexScript for dispatch logic and left-behind passenger tracking
+- Statistics Collectors + live Dashboard for KPI monitoring
+- FlexSim Experimenter for sensitivity analysis (3 frequency scenarios)
+
+## 📂 Repository Structure
+/model        → FlexSim model file (.fsm)
+/data         → Excel arrival tables (passengers and buses by scenario)
+/results      → Output charts and KPI summaries per scenario
+/docs         → Full academic report (Memoria Final)
+/images       → FlexSim 3D simulation screenshots
+
+## 📚 Methodology Summary
+Passenger demand was modeled using two representative levels: 
+peak (2 pax/min) and valley (0.2 pax/min), discretized into 
+10-minute intervals over a 24-hour horizon (2,808 total passengers/day, 
+3 lines). Eight experimental scenarios were evaluated. The optimal 
+frequencies identified (8 min peak, 13 min valley) were combined via 
+linear interpolation to produce a variable frequency policy validated 
+against all defined KPIs.
  
