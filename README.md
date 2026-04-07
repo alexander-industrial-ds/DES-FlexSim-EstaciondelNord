@@ -35,14 +35,13 @@ be collecting.
   linear interpolation for adaptive frequency policy
 
 ## 📊 Key Results
-```
 | Scenario | Demand | Frequency | Avg. Wait Time | Outcome |
 |---|---|---|---|---|
 | Peak hour — optimal | 2 pax/min | **8 min** | ~12 min | ✅ Target met |
 | Peak hour — saturated | 2 pax/min | 10 min | >200 min | ❌ System collapse |
 | Valley hour — optimal | 0.2 pax/min | **13 min** | ~20 min | ✅ Target met |
 | Variable frequency (full day) | Adaptive | Adaptive | **~10 min avg** | ✅ Best overall |
-```
+
 
 **Derived frequency policy formula:**
 Interval (s) = 813.3 − 166.6 × arrival_rate (pax/min)
@@ -65,12 +64,14 @@ for any intermediate demand level, balancing service quality and efficiency.
 ![Process Flow Architecture](images/ProcessFlow_arquitecture.jpg)
 
 ## 📂 Repository Structure
+```
 DES-FlexSim-EstaciondelNord/
 │
 ├── README.md                    ← Landing page with embedded visuals
 ├── /model                       ← FlexSim .fsm file + Excel arrival tables
 ├── /docs                        ← Memoria Final (PDF)
 └── /images                      ← All screenshots and GIFs for README
+```
 
 ## 📚 Methodology Summary
 Passenger demand was modeled using two representative levels: 
