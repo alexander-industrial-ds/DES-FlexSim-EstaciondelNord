@@ -49,8 +49,7 @@ Interval (s) = 813.3 − 166.6 × arrival_rate (pax/min)
 This formula allows any operator to calculate the recommended bus interval 
 for any intermediate demand level, balancing service quality and efficiency.
 
-![20 min Staytime](PasajerosStaytime_20M_PHV.png) 
-![Dynamic Staytime](PasajerosStaytime_Mixto.png)
+![Passenger Staytime 20 min vs Dynamic](Staytime.jpg) 
 
 ## 🏗️ System Architecture
 - 3 bus lines (Barcelona–Berga, Line e12, Line 602), each with a dedicated 
