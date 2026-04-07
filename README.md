@@ -1,7 +1,7 @@
 ﻿# 🚌 Discrete Event Simulation — Estació del Nord (Barcelona)
-> Passenger Queue Analysis and Bus Frequency Optimization using FlexSim
-> Master's Degree in Industry 4.0 · Universitat Politècnica de Catalunya (UPC)
+Passenger Queue Analysis and Bus Frequency Optimization using FlexSim - Master's Degree in Industry 4.0 · Universitat Politècnica de Catalunya (UPC) - Developed in collaboration with Mikel Duran and Pau Modolell as part of the UPC Master's program
 
+![Flexsim Model Estació del Nord](images/simulation3D_dashboard.gif)
 ---
 
 ## 📌 Project Overview
@@ -20,6 +20,12 @@ travelers, congestion at boarding platforms increased significantly.
 This study addresses the question: what bus service frequency achieves an 
 average passenger wait time of ≤ 20 minutes, while minimizing operational 
 overcapacity?
+
+It is important for any transport company to collect and store data about 
+the services it delivers, because passengers are central to its operational 
+processes. Our findings serve as a blueprint for future transport models 
+seeking to improve the quality of operational data that companies should 
+be collecting.
 
 ## 🛠️ Tools & Technologies
 - **FlexSim** — Discrete Event Simulation (DES), General Process Flow, 
@@ -43,6 +49,9 @@ Interval (s) = 813.3 − 166.6 × arrival_rate (pax/min)
 This formula allows any operator to calculate the recommended bus interval 
 for any intermediate demand level, balancing service quality and efficiency.
 
+![20 min Staytime](PasajerosStaytime_20M_PHV.png) 
+![Dynamic Staytime](PasajerosStaytime_Mixto.png)
+
 ## 🏗️ System Architecture
 - 3 bus lines (Barcelona–Berga, Line e12, Line 602), each with a dedicated 
   boarding point
@@ -53,12 +62,15 @@ for any intermediate demand level, balancing service quality and efficiency.
 - Statistics Collectors + live Dashboard for KPI monitoring
 - FlexSim Experimenter for sensitivity analysis (3 frequency scenarios)
 
+![Process Flow Architecture](images/ProcessFlow_arquitecture.jpg)
+
 ## 📂 Repository Structure
-/model        → FlexSim model file (.fsm)
-/data         → Excel arrival tables (passengers and buses by scenario)
-/results      → Output charts and KPI summaries per scenario
-/docs         → Full academic report (Memoria Final)
-/images       → FlexSim 3D simulation screenshots
+DES-FlexSim-EstaciondelNord/
+│
+├── README.md                    ← Landing page with embedded visuals
+├── /model                       ← FlexSim .fsm file + Excel arrival tables
+├── /docs                        ← Memoria Final (PDF)
+└── /images                      ← All screenshots and GIFs for README
 
 ## 📚 Methodology Summary
 Passenger demand was modeled using two representative levels: 
